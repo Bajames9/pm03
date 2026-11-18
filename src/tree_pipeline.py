@@ -99,8 +99,8 @@ def choose_depth(comparison):
 
     When two depths tie, return the smaller depth.
     """
-    # TODO
-    raise NotImplementedError
+    return comparison.loc[comparison["validation_accuracy"].idxmax(), "depth"]
+
 
 
 def evaluate_model(tree, X, y):
