@@ -145,8 +145,19 @@ def score_cases(tree, cases, columns):
     (the probability of "Yes", rounded to 3 decimal places), sorted by
     dissatisfied_probability from highest to lowest, then by case_id ascending.
     """
-    # TODO
-    raise NotImplementedError
+    X = prepare_features(cases, columns=columns)
+    probs = tree.predict_proba(X)
+    yes_index = list(tree.classes_).index("Yes")
+
+    result = pd.DataFrame({
+        "case_id": cases["case_id"].values,
+        "dissatisfied_probability": probs[:, yes_index].round(3)
+    })
+
+    return result.sort_values(
+        ["dissatisfied_probability", "case_id"],
+        ascending=[False, True]
+    )
 
 
 def evaluate_business_value(tree, test, columns, calls):
