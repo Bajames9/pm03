@@ -1,6 +1,6 @@
 """PM03: decision tree that recognizes dissatisfied support customers.
 
-Implement every function marked TODO. Keep the functiong names, parameters, and
+Implement every function marked TODO. Keep the function names, parameters, and
 return values. You may add helper functions.
 """
 import pandas as pd
@@ -19,8 +19,8 @@ def select_responders(cases):
 
     A case has a known outcome when survey_responded is "Yes".
     """
-    # TODO
-    raise NotImplementedError
+    return cases[cases["survey_responded"] == "Yes"].copy()
+
 
 
 def split_by_date(responders):
@@ -32,8 +32,13 @@ def split_by_date(responders):
 
     Returns (training, validation, test) as three DataFrames.
     """
-    # TODO
-    raise NotImplementedError
+    dates = pd.to_datetime(responders["closed_date"])
+
+    training   = responders[(dates >= "2025-01-01") & (dates <= "2025-08-31")].copy()
+    validation = responders[(dates >= "2025-09-01") & (dates <= "2025-10-31")].copy()
+    test       = responders[(dates >= "2025-11-01") & (dates <= "2025-12-31")].copy()
+
+    return training, validation, test
 
 
 def prepare_features(cases, columns=None):
@@ -44,15 +49,27 @@ def prepare_features(cases, columns=None):
     3. When columns is provided, return exactly those columns, in that order,
        filling a missing column with 0.
     """
-    # TODO
-    raise NotImplementedError
+    drop_cols = [
+        ""
+    ]
+
+    features = cases.drop(columns=[col for col in drop_cols if col in cases.columns])
+
+    features = pd.get_dummies(features, drop_first=True, dtype=int)
+
+    if columns is not None:
+        features = features.reindex(columns=list(columns), fill_value=0)
+
+    return features
 
 
 def train_tree(X, y, depth):
     """Create a DecisionTreeClassifier(criterion="gini", max_depth=depth, random_state=0),
     fit the tree to X and y, and return the fitted tree."""
-    # TODO
-    raise NotImplementedError
+
+    model = DecisionTreeClassifier(criterion="gini", max_depth=depth, random_state=0)
+    model.fit(X, y)
+    return model
 
 
 def compare_depths(X_train, y_train, X_valid, y_valid, depths):
