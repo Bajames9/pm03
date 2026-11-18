@@ -111,8 +111,31 @@ def evaluate_model(tree, X, y):
     accuracy, precision, recall
     Round accuracy, precision, and recall to 3 decimal places.
     """
-    # TODO
-    raise NotImplementedError
+    predicted = tree.predict(X)
+    actual_yes = (y == "Yes").to_numpy()
+    predicted_yes = (predicted == "Yes")
+
+    true_pos = int((actual_yes & predicted_yes).sum())
+    false_pos = int((~actual_yes & predicted_yes).sum())
+    false_neg = int((actual_yes & ~predicted_yes).sum())
+    true_neg = int((~actual_yes & ~predicted_yes).sum())
+
+    accuracy = (true_pos + true_neg) / (true_pos + false_pos + false_neg + true_neg)
+    precision = true_pos / (true_pos + false_pos) if (true_pos + false_pos) > 0 else 0.0
+    recall = true_pos / (true_pos + false_neg) if (true_pos + false_neg) > 0 else 0.0
+
+    return pd.DataFrame([{
+        "true_positives": true_pos,
+        "false_positives": false_pos,
+        "false_negatives": false_neg,
+        "true_negatives": true_neg,
+        "accuracy": round(accuracy, 3),
+        "precision": round(precision, 3),
+        "recall": round(recall, 3),
+    }])
+
+
+
 
 
 def score_cases(tree, cases, columns):
