@@ -50,7 +50,10 @@ def prepare_features(cases, columns=None):
        filling a missing column with 0.
     """
     drop_cols = [
-        ""
+        "case_id",
+        "closed_date",
+        "survey_responded",
+        "dissatisfied",
     ]
 
     features = cases.drop(columns=[col for col in drop_cols if col in cases.columns])
