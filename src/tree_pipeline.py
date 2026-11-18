@@ -1,6 +1,6 @@
 """PM03: decision tree that recognizes dissatisfied support customers.
 
-Implement every function marked TODO. Keep the function names, parameters, and
+Implement every function marked TODO. Keep the functiong names, parameters, and
 return values. You may add helper functions.
 """
 import pandas as pd
