@@ -82,8 +82,16 @@ def compare_depths(X_train, y_train, X_valid, y_valid, depths):
     depth, training_accuracy, validation_accuracy
     Round each accuracy to 3 decimal places.
     """
-    # TODO
-    raise NotImplementedError
+    rows = []
+    for depth in depths:
+        tree = train_tree(X_train, y_train, depth)
+        rows.append({
+            "depth": depth,
+            "training_accuracy": round(tree.score(X_train, y_train), 3),
+            "validation_accuracy": round(tree.score(X_valid, y_valid), 3),
+        })
+    return pd.DataFrame(rows)
+
 
 
 def choose_depth(comparison):
