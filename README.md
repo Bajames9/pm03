@@ -84,7 +84,9 @@ Running `main.py` again replaces the outputs.
 ## Team Notes
 
 **How the team ran the application:**
+
 group shared it through github
+
 Nathaniel ran it the program on vs code 
 
 **Known limitations or unresolved issues:**
