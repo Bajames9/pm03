@@ -166,5 +166,5 @@ def evaluate_business_value(tree, test, columns, calls):
 
 def extract_rules(tree, columns):
     """Return the rules of the tree as text: export_text with show_weights=True."""
-    # TODO
-    raise NotImplementedError
+    return export_text(tree, feature_names=list(columns), show_weights=True)
+
