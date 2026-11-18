@@ -171,8 +171,20 @@ def evaluate_business_value(tree, test, columns, calls):
     Returns a one-row DataFrame with the columns:
     calls, dissatisfied_reached_by_tree, dissatisfied_expected_at_random
     """
-    # TODO
-    raise NotImplementedError
+    scores = score_cases(tree, test, columns)
+    called = scores.head(calls)
+
+    truly_dissatisfied = test.loc[test["dissatisfied"] == "Yes", "case_id"]
+    reached = int(called["case_id"].isin(truly_dissatisfied).sum())
+
+    share = (test["dissatisfied"] == "Yes").mean()
+    expected = round(calls * share, 1)
+
+    return pd.DataFrame([{
+        "calls": calls,
+        "dissatisfied_reached_by_tree": reached,
+        "dissatisfied_expected_at_random": expected,
+    }])
 
 
 def extract_rules(tree, columns):

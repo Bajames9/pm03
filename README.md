@@ -88,5 +88,6 @@ Running `main.py` again replaces the outputs.
 group shared it through github
 
 Nathaniel ran it the program on vs code 
+Bailey ran the code in WebStorm using a venv Baileys output was used for final submission
 
 **Known limitations or unresolved issues:**
